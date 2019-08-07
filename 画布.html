@@ -12,6 +12,7 @@
     <!-- <img src="./ad.jpg" alt=""> -->
     <!-- width="200" height="200" -->
     <canvas id="drawing" height="600">A drawing of something.</canvas>
+    <canvas id="drawing0" height="600">A drawing of something.</canvas>
     <script>
         var drawing = document.getElementById("drawing");
         // 判断浏览器是否支持canvas
@@ -157,6 +158,70 @@
             //重置全局透明度
             context.globalAlpha = 0;
         }
+        var buffer = new ArrayBuffer(20),
+            view = new DataView(buffer),
+            value;
+        view.setUint16(0,25);
+        value = view.getInt8(0);
+        console.log(value);
+        //创建一个新数组，使用整个缓冲器
+        var int8s = new Int8Array(buffer);
+        // //只使用从字节9开始的缓冲
+        // var int16s = new Int16Array(buffer,9);
+        // //只使用从字节9到字节18的缓冲器
+        // var unit16s = new Uint16Array(buffer,9,10);
+        // //使用缓冲器的一部分保存8位整数，另一部分保存16位整数
+        // var int8s = new Int8Array(buffer,0,10);
+        // var unit16s = new Uint16Array(buffer,11,10);
+
+        var unit16s = new Uint16Array(10);
+        unit16s[0] = 65537;
+        console.log(unit16s[0]);
+        //新的一块画布
+        var drawing0 = document.getElementById("drawing0");
+        if(drawing0.getContext) {
+            try{
+                var gl = drawing0.getContext("experimental-webgl");
+            }catch(ex){
+                
+            }
+            if(gl){
+                //使用WebGL
+                gl.clearColor(0,0,0,0.5);
+                gl.clear(gl.COLOR_BUFFER_BIT);
+                gl.viewport(0,0,drawing0.width/2,drawing0.height/2);//坐标顺时针
+                //缓冲区
+                var buffer = gl.createBuffer();
+                gl.bindBuffer(gl.ARRAY_BUFFER,buffer);
+                gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([0,0.5,1]),gl.STATIC_DRAW);
+                // 释放缓冲区内容
+                // gl.deleteBuffer(buffer);
+                //错误
+                var errorCode = gl.getError();
+                while(errorCode){
+                    console.log("Error occurred: " + errorCode);
+                    errorCode = gl.getError();
+                }
+                //着色器  OpenGL着色语言
+                // 着色语言
+                
+                
+            }else{
+                console.log("WebGL context could not be created");
+            }
+        }
+    </script>
+    <script src="x-webgl/x-vertex-shader" id="vertexShader">
+        // 顶点着色器
+        // attribute vec2 aVertexPosition;
+        // void main() {
+        //     gl.Position = vec4(aVertexPosition,0.0,1.0);
+        // }
+        //片段着色器
+        // uniform vec4 uColor;
+        // void main() {
+        //     gl_FragColor = uColor;
+        // }
     </script>
 </body>
 
