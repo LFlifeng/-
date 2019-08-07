@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery大转盘抽奖插件kinerLottery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="css/kinerLottery.css">
+
+</head>
+<body>
+
+    <div id="box" class="box">
+        <div class="outer KinerLottery KinerLotteryContent"><img src="images/g.png"></div>
+        <!-- 大专盘分为三种状态：活动未开始（no-start）、活动进行中(start)、活动结束(completed),可通过切换class进行切换状态，js会根据这3个class进行匹配状态 -->
+        <div class="inner KinerLotteryBtn start"></div>
+    </div>
+
+    <script src="js/zepto.min.js"></script>
+    <script src="js/kinerLottery.js"></script>
+    <script>
+        /**
+         * 根据转盘旋转角度判断获得什么奖品
+         * @param deg
+         * @returns {*}
+         */
+        var whichAward = function (deg) {
+            if ((deg > 337.5 && deg <= 360) || (deg > 0 && deg <= 22.5)) { 
+                return "iPad2";
+            } else if (deg > 22.5 && deg <= 67.5) { 
+                return "24小时记牌器";
+            } else if (deg > 67.5 && deg <= 112.5) { 
+                return "10Q币";
+            } else if (deg > 112.5 && deg <= 157.5) {
+                return "10000欢乐豆";
+            } else if (deg > 157.5 && deg <= 202.5) {
+                return "七天绝版黑桃A游戏秀";
+            } else if (deg > 202.5 && deg <= 247.5) { 
+                return "1魅力值";
+            } else if (deg > 247.5 && deg <= 292.5) {
+                return "七天蓝钻";
+            } else if (deg > 292.5 && deg <= 337.5){
+                return "九阳豆浆机";
+            }
+        }
+        var KinerLottery = new KinerLottery({
+            rotateNum: 8, /*转盘转动圈数*/
+            body: "#box", /*大转盘整体的选择符或zepto对象*/
+            direction: 0, /*0为顺时针转动,1为逆时针转动*/
+            disabledHandler: function (key) {
+                switch (key) {
+                    case "noStart":
+                        alert("活动尚未开始");
+                        break;
+                    case "completed":
+                        alert("活动已结束");
+                        break;
+                }
+            }, /*禁止抽奖时回调*/
+            clickCallback: function () {
+                /*此处访问接口获取奖品*/
+                function random() {
+                    return Math.floor(Math.random() * 360);
+                }
+                this.goKinerLottery(random());
+            }, /*点击抽奖按钮,再次回调中实现访问后台获取抽奖结果,拿到抽奖结果后显示抽奖画面*/
+            KinerLotteryHandler: function (deg) {
+                alert("恭喜您获得:" + whichAward(deg));
+
+            } /*抽奖结束回调*/
+        });
+    </script>
+
+
+</body>
+</html>
+<!-- <a href="http://www.bootstrapmb.com" style="display:none">bootstrapmb</a> -->
+
+
