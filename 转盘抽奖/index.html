@@ -6,7 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <link rel="stylesheet" href="css/kinerLottery.css">
-
+    <link rel="stylesheet" href="js/render/layer-v3.1.1/layer/mobile/need/layer.css">
+    <style>
+        .inner {
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 
@@ -18,6 +23,8 @@
 
     <script src="js/zepto.min.js"></script>
     <script src="js/kinerLottery.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/render/layer-v3.1.1/layer/layer.js"></script>
     <script>
         /**
          * 根据转盘旋转角度判断获得什么奖品
@@ -67,7 +74,8 @@
                 this.goKinerLottery(random());
             }, /*点击抽奖按钮,再次回调中实现访问后台获取抽奖结果,拿到抽奖结果后显示抽奖画面*/
             KinerLotteryHandler: function (deg) {
-                alert("恭喜您获得:" + whichAward(deg));
+                // alert("恭喜您获得:" + whichAward(deg));
+                layer.msg("恭喜您获得:" + whichAward(deg));//弹出层美化
 
             } /*抽奖结束回调*/
         });
