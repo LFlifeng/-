@@ -1,65 +1,78 @@
+// pages/settings/feedback/feedback.js
+
+var wilddog = require('../../../utils/wilddog-weapp-all')
+var config = {
+  syncURL: 'https://miemie.wilddogio.com',
+  authDomain: 'miemie.wilddog.com'
+}
+var app = getApp()
+
+
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-    
+    userInfo: {},
+    content: "",
+    connect: ""
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
   onLoad: function (options) {
-    
-  },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-    
+    const that = this;
+    // 页面初始化 options为页面跳转所带来的参数
+    app.getUserInfo(function (userInfo) {
+      that.setData({
+        userInfo: userInfo
+      })
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-    
+  getContent: function (e) {
+    this.setData({
+      content: e.detail.value
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-    
+  getConnection: function (e) {
+    this.setData({
+      connect: e.detail.value
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-    
+  getNowFormatDate: function () {
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+      month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+      strDate = "0" + strDate;
+    }
+    var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate
+      + " " + date.getHours() + seperator2 + date.getMinutes()
+      + seperator2 + date.getSeconds();
+    return currentdate;
   },
+  submitSuggestion: function () {
+    wilddog.initializeApp(config)
+    var ref = wilddog.sync().ref("/web/saving-data/feedback");
+    // child() 用来定位到某个节点。
 
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-    
-  },
+    var currentdate = this.getNowFormatDate()
+    ref.child(currentdate).set({
+      "content": this.data.content,
+      "connect": this.data.connect,
+      "user": this.data.userInfo.nickName
+    });
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-    
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-    
+    wx.showModal({
+      title: '提示',
+      content: '提交成功！感谢您的反馈！',
+      showCancel: false,
+      success: function (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+        }
+      }
+    })
   }
+  
 })

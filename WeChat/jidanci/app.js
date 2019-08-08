@@ -1,9 +1,9 @@
 //app.js
 
-var hotapp = require('./utils/hotapp.js');
+var hotapp=require('./utils/hotapp.js');
 //hotapp.setDebug(true);
 
-var wilddog = require('./utils/wilddog-weapp-all.js');
+var wilddog=require('./utils/wilddog-weapp-all.js');
 var config = {
   syncURL: 'https://miemie.wilddogio.com',
   authDomain: 'miemie.wilddog.com'
@@ -19,11 +19,11 @@ App({
     wilddog.initializeApp(config)
 
   },
-  getUserInfo: function (cb) {
+  getUserInfo:function(cb){
     var that = this
-    if (this.globalData.userInfo) {
+    if(this.globalData.userInfo){
       typeof cb == "function" && cb(this.globalData.userInfo)
-    } else {
+    }else{
       //调用登录接口
       wx.login({
         success: function () {
@@ -37,7 +37,7 @@ App({
       })
     }
   },
-  globalData: {
-    userInfo: null
+  globalData:{
+    userInfo:null
   }
 })

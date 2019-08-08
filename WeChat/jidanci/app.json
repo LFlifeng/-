@@ -38,5 +38,6 @@
     "navigationBarBackgroundColor": "#2C2D31",
     "navigationBarTitleText": "咩咩单词",
     "navigationBarTextStyle": "white"
-  }
+  },
+  "sitemapLocation": "sitemap.json"
 }
