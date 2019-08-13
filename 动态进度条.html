@@ -68,6 +68,107 @@
     }
     array();
     console.log(a);
+    //Promise
+    //回调方式
+    // function add(getX,getY,cb){
+    //     var x,y;
+    //     getX(function(xVal){
+    //         x = xVal;
+    //         if(y != undefined){
+    //             cb(x+y);
+    //         }
+    //     });
+    //     getY(function(yVal){
+    //         y = yVal;
+    //         if(x != undefined){
+    //             cb(x+y);
+    //         }
+    //     });
+    // }
+    // add(getX,getY,function(sum){
+    //     console.log(sum);
+    // });
+    //promise值
+    // function add(xPromise,yPromise){
+    //     return Promise.all([xPromise,yPromise])
+    //                     .then(function(values){
+    //                         return values[0] + values[1];
+    //                     }) ;
+    // }
+    // add(fetchX(),fetchY())
+    //     .then(function(sum){
+    //         console.log(sum);
+    //     });
+    //
+    // var p = new Promise(function(res,rej){
+    //     res("B");
+    // })
+    // p.then(function(){
+    //     p.then(function(){
+    //         console.log("C");
+    //     });
+    //     console.log("A");
+    // });
+    // p.then(function(){
+    //     console.log("B");
+    // });
+    // //Promise 调度技巧
+    // var p3 = new Promise(function(res,rjb){
+    //     res('B');
+    // });
+    // var p1 = new Promise(function(res,rjb){
+    //     res(p3);
+    // });
+    // var p2 = new Promise(function(res,rjb){
+    //     res('A');
+    // });
+    // p1.then(function(v){
+    //     console.log(v);
+    // });
+    // p2.then(function(v){
+    //     console.log(v);
+    // });
+    var p4 = Promise.resolve(21);
+    var p5 = p4.then(function(v){
+        console.log(v);
+        return v*2;
+    });
+    p5.then(function(v){
+        console.log(v);
+    });
+    function delay(time){
+        return new Promise(function(resolve,reject){
+            setTimeout(resolve,reject);
+        });
+    }
+    delay(100)
+        .then(function STEP2(){
+            console.log("step 2 (after 100ms)");
+            return delay(200);
+        })
+        .then(function STEP3(){
+            console.log("step 3 (after another 200ms)");
+        })
+        .then(function STEP4(){
+            console.log("step 4 (next Job)");
+            return delay(50);
+        })
+        .then(function STEP5(){
+            console.log("step 5 (after another 50ms)");
+        });
+    //构造Ajax请求   假定ajax({url},{callback})存在
+    function request(url){
+        return new Promise(function(resolve,reject){
+            ajax(url,resolve);
+        });
+    }
+    request("http://some.url.1/")
+    .then(function(response1){
+        return request("http://some.url.2/?v=" + response1);
+    })
+    .then(function(response2){
+        console.log(response2);
+    });
 </script>
 
 </html>
