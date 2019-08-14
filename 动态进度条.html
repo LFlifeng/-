@@ -128,47 +128,162 @@
     // p2.then(function(v){
     //     console.log(v);
     // });
-    var p4 = Promise.resolve(21);
-    var p5 = p4.then(function(v){
-        console.log(v);
-        return v*2;
-    });
-    p5.then(function(v){
-        console.log(v);
-    });
-    function delay(time){
-        return new Promise(function(resolve,reject){
-            setTimeout(resolve,reject);
-        });
+    // var p4 = Promise.resolve(21);
+    // var p5 = p4.then(function(v){
+    //     console.log(v);
+    //     return v*2;
+    // });
+    // p5.then(function(v){
+    //     console.log(v);
+    // });
+    // function delay(time){
+    //     return new Promise(function(resolve,reject){
+    //         setTimeout(resolve,reject);
+    //     });
+    // }
+    // delay(100)
+    //     .then(function STEP2(){
+    //         console.log("step 2 (after 100ms)");
+    //         return delay(200);
+    //     })
+    //     .then(function STEP3(){
+    //         console.log("step 3 (after another 200ms)");
+    //     })
+    //     .then(function STEP4(){
+    //         console.log("step 4 (next Job)");
+    //         return delay(50);
+    //     })
+    //     .then(function STEP5(){
+    //         console.log("step 5 (after another 50ms)");
+    //     });
+    // //构造Ajax请求   假定ajax({url},{callback})存在[]
+    // function request(url){
+    //     return new Promise(function(resolve,reject){
+    //         // ajax(url,resolve);
+    //     });
+    // }
+    // request("http://some.url.1/")
+    // .then(function(response1){
+    //     return request("http://some.url.2/?v=" + response1);
+    // })
+    // .then(function(response2){
+    //     console.log(response2);
+    // });
+    // // Promise.all()
+    // var p1 = request("http://some.url.1/");
+    // var p2 = request("http://some.url.2/");
+    // Promise.all([p1,p2])
+    // .then(function(msgs){
+    //     return request(
+    //         "http://some.url.3/?v="+msgs.join(",")
+    //     );
+    // })
+    // .then(function(msg){
+    //     console.log(msg);
+    // });
+    // // Promise.race()
+    // var p1 = request("http://some.url.1/");
+    // var p2 = request("http://some.url.2/");
+    // Promise.race([p1,p2])
+    // .then(function(msg){
+    //     return request(
+    //         "http://some.url.3/?v="+msg
+    //     );
+    // })
+    // .then(function(msg){
+    //     console.log(msg);
+    // });
+    // Promise.race([
+    //     foo(),//支持promise的函数  未定义
+    //     timeoutPromise(3000)
+    // ])
+    // .then(
+    //     function(){
+    //         //foo()按时完成
+    //     },
+    //     function(err){
+    //         //要么foo()被拒绝，要么只是没能够按时完成，因此要查看err了解具体原因
+    //     }
+    // );
+    // finally
+    // var p = Promise.resolve(42);
+    // p.then(something)
+    // .finally(cleanup)
+    // .then(another)
+    // .finally(clearup);
+    // if(!Promise.observe){
+    //     Promise.observe = function(pr,cb){
+    //         //观察pr的决议
+    //         pr.then(
+    //             function fulfilled (msg){
+    //                 Promise.resolve(msg).then(cb);
+    //             },
+    //             function rejected(err){
+    //                 Promise.resolve(err).then(cb);
+    //             }
+    //         );
+    //         return pr;
+    //     };
+    // }
+    var x=1;
+    function foo(){
+        x++;
+        bar();
+        console.log("x:",x);
     }
-    delay(100)
-        .then(function STEP2(){
-            console.log("step 2 (after 100ms)");
-            return delay(200);
-        })
-        .then(function STEP3(){
-            console.log("step 3 (after another 200ms)");
-        })
-        .then(function STEP4(){
-            console.log("step 4 (next Job)");
-            return delay(50);
-        })
-        .then(function STEP5(){
-            console.log("step 5 (after another 50ms)");
-        });
-    //构造Ajax请求   假定ajax({url},{callback})存在
-    function request(url){
-        return new Promise(function(resolve,reject){
-            ajax(url,resolve);
-        });
+    function bar(){
+        x++;
     }
-    request("http://some.url.1/")
-    .then(function(response1){
-        return request("http://some.url.2/?v=" + response1);
-    })
-    .then(function(response2){
-        console.log(response2);
-    });
+    foo();
+    //生成器部分
+    var y=1;
+    function *fooo(){
+        y++;
+        yield;//暂停
+        console.log("y:",y);
+    }
+    function barr(){
+        y++;
+    }
+    var it = fooo();
+    it.next();//启动fooo()
+    y;
+    barr();
+    y;
+    it.next();
+    //输入和输出
+    function *fo(x,y){
+        return x*y;
+    }
+    var its = fo(6,7);
+    var resb = its.next();
+    console.log(resb.value);
+    //迭代消息传递
+    function *boo(x){
+        var y = x*(yield);
+        return y;
+    }
+    var is = boo(6);
+    //启动boo()
+    is.next();
+    var ree = is.next(8);
+    console.log(ree.value);
+    //多个迭代器
+    function *coo(){
+        var x = yield 2;
+        z++;
+        var y = yield(x*z);
+        console.log(x,y,z);
+    }
+    var z = 1;
+    var it1 = coo();
+    var it2 = coo();
+    var val1 = it1.next().value;
+    var val2 = it2.next().value;
+    val1 = it1.next(val2*10).value;
+    val2 = it2.next(val1*5).value;
+    it1.next(val2/2);
+    it2.next(val1/4); 
 </script>
 
 </html>
