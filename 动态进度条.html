@@ -284,6 +284,80 @@
     val2 = it2.next(val1*5).value;
     it1.next(val2/2);
     it2.next(val1/4); 
+    //交替执行
+    var a = 1;
+    var b = 2;
+    function *f(){
+        a++;
+        yield;
+        b = b * a;
+        a = (yield b) + 3;
+    }
+    function *e(){
+        b--;
+        yield;
+        a = (yield 8) + b;
+        b = a * (yield 2);
+    }
+    function step(gen){
+        var it = gen();
+        var last;
+        return function(){
+            last = it.next(last).value;
+        };
+    }
+    a = 1;
+    b = 2;
+    var s1 = step(f);
+    var s2 = step(e);
+    s1();//首次运行*f()
+    console.log(a,b);
+    s1();
+    console.log(a,b);
+    s1();
+    console.log(a,b);
+    s2();//现在运行*e()
+    console.log(a,b);
+    s2();
+    console.log(a,b);
+    s2();
+    console.log(a,b);//11 3
+    s2();
+    console.log(a,b);
+    a = 1;
+    b = 2;
+    var s1 = step(f);
+    var s2 = step(e);
+    s2();
+    console.log(a,b);
+    s2();
+    console.log(a,b);
+    s1();
+    console.log(a,b);
+    s2();
+    console.log(a,b);
+    s1();
+    console.log(a,b);
+    s1();
+    console.log(a,b);
+    s2();
+    console.log(a,b);
+    //实现一个直接使用函数闭包的版本
+    var gimmeSomething = (function(){
+        var nextVal;
+        return function(){
+            if(nextVal === undefined){
+                nextVal = 1;
+            }else{
+                nextVal = (3*nextVal)+6;
+            }
+            return nextVal;
+        }
+    })();
+    console.log(gimmeSomething());
+    console.log(gimmeSomething());
+    console.log(gimmeSomething());
+    console.log(gimmeSomething());
 </script>
 
 </html>
