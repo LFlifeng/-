@@ -34,7 +34,7 @@
         var whichAward = function (deg) {
             var n1 = Math.round(Math.random()*100);//获取100之内的任意一个整数
             var n2 = Math.ceil(Math.random()*9);//获取0-9个数里面的值
-            if (((deg > 337.5 && deg <= 360) || (deg > 0 && deg <= 22.5)) && n1>=95) { 
+            if (((deg > 337.5 && deg <= 360) || (deg > 0 && deg <= 22.5)) && n1 > 95) { 
                 return "iPad2";
             } else if (deg > 22.5 && deg <= 67.5) { 
                 return "24小时记牌器";

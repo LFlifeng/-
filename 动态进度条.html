@@ -34,7 +34,14 @@
 
             100% {
                 background-position: 40px 0;
+                transform: rotateY()
             }
+        }
+        .line {
+            width: 200px;
+            /* height: 1px; */
+            border: 1px solid #000;
+            margin-top: 100px;
         }
     </style>
 </head>
@@ -46,8 +53,31 @@
         <option value="0">禁用</option>
     </select>
     <input type="text" id="input">
+    <div class="line"></div>
 </body>
+<script src="./jquery-1.9.1.min.js"></script>
 <script>
+    //需要使用js来旋转元素
+    $('.line').on('mousemove',function(e){
+        var x = e.pageX;
+        var y = e.pageY;
+        var origin = {x:200,y:100};//手动指定当前中心点，也可以根据当前的元素的left+width/2的到x  top+height/2得到y值
+        // 计算出当前鼠标相对于元素中心点的坐标
+        x = x - origin.x;//因为c大于origin.x是在y轴右边，直接减就可
+        y = origin.y - y;//但是y如果要在x轴上方，它是比origin.y要小的，所以这里就需要反过来
+        // 最后计算 
+        // console.log(x + y)
+        // console.log(Math.atan2(y,x));
+        degree = Math.atan2(y,x)/(Math.PI/180) - 90;
+        degree = -degree;
+        console.log(degree)
+        // console.log($(this))
+        $(this).css(
+            'transform','rotateX(degree)'
+        )
+    })
+
+    ////给input框添加禁用事件
     var dis = document.getElementById('dis');
     var input = document.getElementById('input')
     dis.onchange = function () {
@@ -453,7 +483,7 @@
     // 如果(2)和(3)内容同时满足，则可以通过xhr.responseText,获取服务器返回的内容
 
     // 浏览器的滚动距离
-    var scrollTop = document.documentElement.scrollTop||document.boay.scrollTop;
+    // var scrollTop = document.documentElement.scrollTop||document.boay.scrollTop;
 </script>
 
 </html>
