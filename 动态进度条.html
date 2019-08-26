@@ -358,6 +358,102 @@
     console.log(gimmeSomething());
     console.log(gimmeSomething());
     console.log(gimmeSomething());
+    
+    var something = (function(){
+        var nextVal;
+        return {
+            [Symbol.iterator]:function(){return this},
+            //标准迭代器接口方法
+            next:function(){
+                if(nextVal === undefined){
+                    nextVal = 1;
+                }else{
+                    nextVal = (3*nextVal)+6;
+                }
+                return {done:false,value:nextVal};
+            }
+        };
+    })();
+    something.next().value;
+    something.next().value;
+    something.next().value;
+    something.next().value;
+    // console.log(something)
+    // for(var v of something) {
+    //     console.log(v);
+    //     if(v > 500){
+    //         break;
+    //     }
+    // }
+    var aa = [1,3,5,7,9];
+    for (var v of aa){
+        console.log(v);
+    }
+    //iterable
+    var aaa = [1,3,5,7,9];
+    var itt = aaa[Symbol.iterator]();
+    itt.next().value;
+    itt.next().value;
+    itt.next().value;
+    itt.next().value;
+    itt.next().value;
+    // [Symbol.iterator]:function(){return this;}
+
+    //this的理解
+    var User = {
+        count: 1,
+        getCount:function(){
+            return this.count;
+        }
+    };
+    console.log(User.getCount());// 1
+    var func = User.getCount;
+    console.log(func());// undefined
+
+    for(var i=1;i<=3;i++){
+        setTimeout(function(){
+            console.log(i);
+        },0);
+    }
+    //写一个获取非行间样式的函数
+    function getStyle(obj,attr){
+        if(obj.cutrrentStyle){
+            return obj.cutrrentStyle[attr];
+        }else{
+            getComputedStyle(obj,false)[attr];
+        }
+    }
+    //获取页面中所有的CheckBox
+    // var inputs = document.getElementsByTagName("input");
+    // var checkboxArray = [];
+    // for(var i=0;i<inputs.length;i++){
+    //     var obj = inputs[i];
+    //     if(obj.type == "checkbox"){
+    //         checkboxArray.push(obj);
+    //     }
+    // }
+
+    //写一个清除字符串前后空格的函数
+    String.prototype.trim = function(){
+        return this.replace(/^\s+/,"").replace(/\s+$/,"");
+    }
+
+    //Ajax原理
+    // (1)创建对象
+    var xhr = new XMLHttpRequest();
+    //(2)打开请求
+    xhr.open('GET','',true);
+    //(3)发送请求
+    xhr.send(); //发送请求到服务器
+    //(4)接受响应
+    xhr.onreadystatechange = function(){};
+    //当readystate值从一个值变为另一个值时，都会触发readystatechange事件
+    // 当readystate==4时，表示已经接受到全部响应数据
+    // 当status==200时，表示服务器成功返回页面和数据
+    // 如果(2)和(3)内容同时满足，则可以通过xhr.responseText,获取服务器返回的内容
+
+    // 浏览器的滚动距离
+    var scrollTop = document.documentElement.scrollTop||document.boay.scrollTop;
 </script>
 
 </html>
