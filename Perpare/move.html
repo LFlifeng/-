@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+<script>
+document.getElementsByTagName('input').item(0).onclick=a;
+document.getElementsByTagName('input').item(1).onclick=b;
+
+function a(){
+	var left=document.getElementById('ul1');
+	var right=document.getElementById('ul2');
+	var myli=left.getElementsByTagName("li");
+	var mylast=myli[left.selectedIndex];
+	left.removeChild(mylast);//左减右加
+	right.appendChild(mylast);
+	}
+
+function b(){
+	
+	var left=document.getElementById('ul1');
+	var right=document.getElementById('ul2');
+	var myli=left.getElementsByTagName("li");
+	var mylast=myli[left.selectedIndex];
+	right.removeChild(mylast);//右减左加
+	left.appendChild(mylast);
+}
+	</script>
+	</head>
+	<body>
+		
+	</body>
+</html>

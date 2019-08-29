@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // let firstName = Symbol();
+        // let person = {};
+        // person[firstName] = "huochai";
+        // console.log(person[firstName]);
+
+
+        // let firstName = Symbol('first name');
+        // let person = {};
+        // person[firstName] = 'huochai';
+        // console.log('first name' in person);
+        // console.log(person[firstName]);
+        // console.log(firstName);
+        // let symbol = Symbol('test symbol');
+        // console.log(typeof symbol);
+
+        let firstName = Symbol('first name');
+        //使用一个需计算字面量属性
+        let person = {
+            [firstName]:'huochai'
+        };
+        //让该属性变为只读
+        Object.defineProperty(person,firstName,{writeable:false});
+        let lastName = Symbol('last name');
+        Object.defineProperties(person,{
+            [lastName]:{
+                value:'match',
+                writeable:false
+            }
+        });
+        console.log(person[firstName]);
+        console.log(person[lastName]);
+    </script>
+</body>
+</html>

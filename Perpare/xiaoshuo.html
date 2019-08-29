@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+<title>TAB切换</title>
+	<style>
+		ul li{
+			background:#CCC;
+			width: 147px;
+			text-align: center;
+		}
+		#book1{display: block}
+		#book2{display: none}
+		#book3{display: none}
+		.li:hover{
+			background: #FF0;
+		}
+	</style>
+   
+
+</head>
+
+<body>
+<div class="div_bg">
+	<ul>
+		<li id="bg1"><a class="white">小说</a></li>
+		<li id="bg2"><a class="white">非小说</a></li>
+		<li id="bg3"><a class="white">少儿</a></li>
+	</ul>
+	<div id="book1">
+		<a href="#" target=_blank>1.时间旅行者的妻子</a><br>
+		<a href="#" target=_blank>2.女心理师（下）</a><br>
+		<a href="#" target=_blank>3.鬼吹灯之精绝古城</a><br>
+		<a href="#" target=_blank>4.女心理师（上）</a><br>
+		<a href="#" target=_blank>5.小时候</a><br>
+		<a href="#" target=_blank>6.追风筝的人</a><br>
+		<a href="#" target=_blank>7.盗墓笔记2</a><br>
+		<a href="#" target=_blank>8.输赢</a>
+	</div>
+	<div id="book2">
+		<a href="#" target=_blank>1.人生若只如初见</a><br>
+		<a href="#" target=_blank>2.高效能人士的七个..</a><br>
+		<a href="#" target=_blank>3.求医不如求己</a><br>
+		<a href="#" target=_blank>4.人体使用手册</a><br>
+		<a href="#" target=_blank>5.孩子，把你的手给我</a><br>
+		<a href="#" target=_blank>6.别笑！我是英文单词书</a><br>
+		<a href="#" target=_blank>7.人体经络使用手册</a><br>
+		<a href="#" target=_blank>8.股市稳赚</a>
+	</div>
+	<div id="book3">
+		<a href="#" target=_blank>1.斯凯瑞金色童书・..</a><br>
+		<a href="#" target=_blank>2.哈利・波特与“混..</a><br>
+		<a href="#" target=_blank>3.不一样的卡梅拉（..</a><br>
+		<a href="#" target=_blank>4.它们是怎么来的</a><br>
+		<a href="#" target=_blank>5.五・三班的坏小子..</a><br>
+		<a href="#" target=_blank>6.男生日记</a><br>
+		<a href="#" target=_blank>7.哈利・波特与魔法石</a><br>
+		<a href="#" target=_blank>8.噼里啪啦丛书(全7册)</a>
+	</div>
+</div>
+</body>
+ <script>
+	var bg1=document.getElementById("bg1");//获取小说的id
+	var bg2=document.getElementById("bg2");//获取非小说的id
+	var bg3=document.getElementById("bg3");//获取少儿的id
+	var book1=document.getElementById("book1");//bg1对应的选项列表
+	var book2=document.getElementById("book2");//bg2对应的选项列表
+	var book3=document.getElementById("book3");//bg3对应的选项列表
+	//bg1.onclick 点击
+	
+	bg1.onmousemove=a1;//鼠标移到这个位置小说后调用a1()函数
+	bg1.onmouseout=a2;//鼠标移开这个位置小说后调用a2()函数
+	bg2.onmousemove=b1;
+	bg2.onmouseout=b2;
+	bg3.onmousemove=c1;
+	bg3.onmouseout=c2;
+	function a1(){
+		//鼠标移到这个位置小说后，调用该函数，实现标题背景改变为另一种颜色，鼠标指针变为手状
+	bg1.style="background-color:yellow;cursor:pointer;"
+	//显示小说对应的选择列表
+	book1.style="display:block"
+	//除小说以外的其他选项列表。，不显示
+	book2.style="display:none"
+	book3.style="display:none"
+	}
+	function a2(){
+		bg1.style="background-color:none";
+		
+	}
+	
+		function b1(){
+	bg2.style="background-color:yellow;cursor:pointer;"
+	book1.style="display:none"
+	book2.style="display:block"
+	book3.style="display:none"
+
+	}
+	function b2(){
+		bg2.style="background-color:none";
+		
+	}
+	
+		function c1(){
+	bg3.style="background-color:yellow;cursor:pointer;"
+	book1.style="display:none"
+	book2.style="display:none"
+	book3.style="display:block"
+
+	}
+	
+function c2(){
+		bg3.style="background-color:none";
+		
+	}
+
+</script>
+</html>

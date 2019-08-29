@@ -1,0 +1,110 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>无标题文档</title>
+    <style>
+        #ul1,
+        #ul2 {
+            width: 200px;
+            height: 200px;
+            border: 1px #000 solid;
+            float: left;
+        }
+
+        li {
+            cursor: pointer;
+        }
+
+        .active {
+            background: red;
+        }
+
+        input {
+            float: left;
+            margin-top: 100px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <ul id="ul1">
+        <li>1111</li>
+        <li>2222</li>
+        <li>3333</li>
+        <li>4444</li>
+        <li>5555</li>
+    </ul>
+    <input type="button" value="→">
+    <input type="button" value="←">
+    <ul id="ul2">
+        <li>aaaa</li>
+        <li>bbbb</li>
+        <li>cccc</li>
+        <li>dddd</li>
+        <li>eeee</li>
+    </ul>
+</body>
+<script src="./jquery-3.3.1.min.js"></script>
+<script>
+    //点击 ——> 把左侧选中的li追加到右侧
+    $("#ul1").on('click', 'li', function () {
+        let _this = $(this);
+        $('input[value="→"]').click(function () {
+            _this.appendTo('#ul2')
+        });
+    })
+
+
+    //点击 <—— 把右侧选中的li追加到左侧
+    $("#ul2").on('click', 'li', function () {
+        let _this = $(this);
+        $('input[value="←"]').click(function () {
+            _this.appendTo('#ul1')
+        });
+    })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// document.getElementsByTagName('input').item(0).onclick=a;
+// document.getElementsByTagName('input').item(1).onclick=b;
+
+// function a(){
+// 	var left=document.getElementById('ul1');
+// 	var right=document.getElementById('ul2');
+// 	var myli=left.getElementsByTagName("li");
+// 	var mylast=myli[left.selectedIndex];
+// 	left.removeChild(mylast);
+// 	right.appendChild(mylast);
+
+// }
+
+// function b(){
+
+// 	var left=document.getElementById('ul1');
+// 	var right=document.getElementById('ul2');
+// 	var myli=left.getElementsByTagName("li");
+// 	var mylast=myli[left.selectedIndex];
+// 	right.removeChild(mylast);
+// 	left.appendChild(mylast);
+// }
+</script>
+
+</html>

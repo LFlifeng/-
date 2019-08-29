@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+<style>
+select{
+	width:200px;
+}
+button{
+	margin:20px 50px;
+	}
+</style>
+<script>	
+
+function moveOne(){
+	var left=document.getElementById("left");
+	var right=document.getElementById("right");	
+	var myoptions=left.getElementsByTagName("option");
+	var mylast=myoptions[left.selectedIndex];
+		//alert(myoptions[i].value);//
+	left.removeChild(mylast);
+	right.appendChild(mylast);
+	
+}	
+function moveTwo(){
+	var left=document.getElementById("left");
+	var right=document.getElementById("right");	
+	var myoptions=right.getElementsByTagName("option");
+	var mylast=myoptions[right.selectedIndex];
+		//alert(myoptions[i].value);//
+	right.removeChild(mylast);
+	left.appendChild(mylast);
+	
+}	
+//function moveAll1(){
+//	var left=document.getElementById("left");
+//	var right=document.getElementById("right");	
+//	
+//	var myoptions=left.getElementsByTagName("option");
+//	for(var i=0;;)
+//	{
+//	var mylast=myoptions[i]
+//	left.removeChild(mylast);
+//	right.appendChild(mylast);
+//	
+//	}
+//	
+//}
+//function moveAll2(){
+//	var left=document.getElementById("left");
+//	var right=document.getElementById("right");	
+//	
+//	var myoptions=right.getElementsByTagName("option");
+//	for(var i=0;;)
+//	{
+//	var mylast=myoptions[i]
+//	right.removeChild(mylast);
+//	left.appendChild(mylast);
+//	
+//	}
+//	
+//}
+</script>
+<body>
+<select id="left" size="10">
+<option>选项一</option>
+<option>选项二</option>
+<option>选项三</option>
+<option>选项四</option>
+<option>选项五</option>
+<option>选项六</option>
+<option>选项七</option>
+<option>选项八</option>
+</select>
+<select id="right" size="10" >
+
+</select>
+<br />
+<button onclick="moveOne()">选中一个右移</button>
+<button onclick="moveTwo()">选中一个左移</button>
+<br />
+<!--<button onclick="moveAll1()">选中所有右移</button>
+<button onclick="moveAll2()">选中所有左移</button>-->
+</body>
+</html>
