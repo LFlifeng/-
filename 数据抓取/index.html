@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>index</title>
+    <script src="./jquery-1.9.1.min.js"></script>
+    <style>
+        .box {
+            width: 100%;
+            height: 100%;
+            /* background-image: url(./bg.jpg); */
+            /* background-size: cover; */
+            /* position: relative; */
+        }
+
+        .box img {
+            position: relative;
+        }
+
+        .box .box1 {
+            position: absolute;
+            top: 160px;
+            left: 60px;
+            /* width: 100px;
+            height: 150px;
+            background-color: brown; */
+        }
+
+        .box .box2 {
+            position: absolute;
+            top: 957px;
+            left: 957px;
+            width: 100px;
+            height: 50px;
+            /* background-color: brown; */
+            color: #28f3c5;
+            font-size: 48px;
+        }
+
+        li {
+            list-style: none;
+            padding: 10px 0;
+        }
+
+        span {
+            color: #68efff;
+            padding-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div id="sse">
+        <a href="javascript:WebSocketTest()">运行 WebSocket</a>
+    </div> -->
+    <script type="text/javascript">
+        var _time;
+        function WebSocketTest() {
+            if ("WebSocket" in window) {
+                // console.log("您的浏览器支持WebSocket");
+                let a = new WebSocket(encodeURI('ws://192.168.0.36:7999/echo'));
+                // a.onopen = function () {
+
+                //     a.send("123aa");
+                // }
+                // a.onopen = function () {
+                //     a.send("123aabbbb");
+                // }
+                a.onmessage = function (msg) {
+                    // console.log(msg);
+
+                    data = eval('(' + msg.data + ')');
+                    // console.log(data.count)
+                    $(".box2").text(data.count);
+                    var index = 0,
+                        size = data.list.length,
+                        count = 18;
+                    data.list.forEach(function (e) {
+                        $(".box1").append("<li>" + "<span>已统计</span>" + "<span>" + e.time + "</span>" + "</span>" + "<span>" + e.province + "</span>" + "<span>" + e.type + "</span>" + "<span>" + e.name + "</li>");
+                        if ($(".box1").children("li").length > count) {
+                            $(".box1").children("li")[0].remove()
+                        }
+                    })
+
+                }
+                a.onclose = function(){ 
+                  // 关闭 websocket
+                  alert(1)
+                  clearInterval(_time);
+                  _time = setInterval(function(){
+                    WebSocketTest();
+                  },2000);
+               };
+            } else {
+                // console.log("您的浏览器不支持WebSocket");
+            }
+        }
+        WebSocketTest();
+    </script>
+    <div class="box">
+        <img src="./bg.jpg" alt="" height="100%" width="100%">
+        <div class="box1">
+
+        </div>
+        <div class="box2"></div>
+    </div>
+</body>
+
+</html>
