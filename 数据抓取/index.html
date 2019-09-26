@@ -8,45 +8,63 @@
     <title>index</title>
     <script src="./jquery-1.9.1.min.js"></script>
     <style>
-        html,body {
+        html,
+        body {
             margin: 0;
             padding: 0;
+            overflow: hidden;
         }
+
         .box {
             width: 100%;
             height: 100%;
-            /* background-image: url(./bg.jpg); */
-            /* background-size: cover; */
-            /* position: relative; */
         }
 
         .box img {
-            position: relative;
+            /* position: relative; */
+            width: 100%;
+            height: auto;
+            background-size: contain;
         }
 
         .box .box1 {
-            position: absolute;
+            position: fixed;
             top: 160px;
             left: 60px;
-            /* width: 100px;
-            height: 150px;
-            background-color: brown; */
+            width: 100%;
         }
 
         .box .box2 {
-            position: absolute;
+            position: fixed;
             top: 957px;
             left: 957px;
             width: 100px;
             height: 50px;
-            /* background-color: brown; */
             color: #28f3c5;
             font-size: 48px;
         }
-
+        .box .box3 {
+            position: fixed;
+            top: 15%;
+            right: 4%;
+            /* width: 100px;
+            height: 50px; */
+            color: #fff;
+            font-size: 48px;
+        }
+        .box .box3 .num {
+            position: absolute;
+            top: 20%;
+            right: 20%;
+            font-size: 48px;
+        }
         li {
             list-style: none;
             padding: 10px 0;
+            width: 70%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
 
         span {
@@ -57,29 +75,21 @@
 </head>
 
 <body>
-    <!-- <div id="sse">
-        <a href="javascript:WebSocketTest()">运行 WebSocket</a>
-    </div> -->
     <script type="text/javascript">
         var _time;
         function WebSocketTest() {
             // alert(1)
             if ("WebSocket" in window) {
-                // console.log("您的浏览器支持WebSocket");
                 let a = new WebSocket(encodeURI('ws://192.168.0.36:7999/echo'));
                 // a.onopen = function () {
-
-                //     a.send("123aa");
-                // }
-                // a.onopen = function () {
-                //     a.send("123aabbbb");
                 // }
                 a.onmessage = function (msg) {
                     // console.log(msg);
 
                     data = eval('(' + msg.data + ')');
-                    // console.log(data.count)
+                    // console.log(data)
                     $(".box2").text(data.count);
+                    $(".box .box3 .num").text(data.today);
                     var index = 0,
                         size = data.list.length,
                         count = 18;
@@ -90,15 +100,15 @@
                         }
                     })
                 }
-                a.onclose = function(){ 
-                  // 关闭 websocket
-                //   alert(1)
-                  clearTimeout(_time);
-                  _time = setTimeout(function(){
-                    WebSocketTest();
-                    // console.log(121)
-                  },2000);
-               };
+                a.onclose = function () {
+                    // 关闭 websocket
+                    //   alert(1)
+                    clearTimeout(_time);
+                    _time = setTimeout(function () {
+                        WebSocketTest();
+                        // console.log(121)
+                    }, 2000);
+                };
             } else {
                 // console.log("您的浏览器不支持WebSocket");
             }
@@ -106,11 +116,15 @@
         WebSocketTest();
     </script>
     <div class="box">
-        <img src="./bg.jpg" alt="" height="100%" width="100%">
+        <img src="./bg.jpg" alt="">
         <div class="box1">
 
         </div>
         <div class="box2"></div>
+        <div class="box3">
+            <img src="./bg1.png" alt="">
+            <div class="num"></div>
+        </div>
     </div>
 </body>
 
