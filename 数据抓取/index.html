@@ -22,7 +22,7 @@
 
         .box img {
             /* position: relative; */
-            width: 100%;
+            width: auto;
             height: auto;
             background-size: contain;
         }
@@ -36,13 +36,14 @@
 
         .box .box2 {
             position: fixed;
-            top: 957px;
+            top: 966px;
             left: 957px;
-            width: 100px;
-            height: 50px;
+            /* width: 100px;
+            height: 50px; */
             color: #28f3c5;
             font-size: 48px;
         }
+
         .box .box3 {
             position: fixed;
             top: 15%;
@@ -52,12 +53,14 @@
             color: #fff;
             font-size: 48px;
         }
+
         .box .box3 .num {
             position: absolute;
             top: 20%;
             right: 20%;
             font-size: 48px;
         }
+
         li {
             list-style: none;
             padding: 10px 0;
@@ -84,10 +87,10 @@
                 // a.onopen = function () {
                 // }
                 a.onmessage = function (msg) {
-                    // console.log(msg);
+                    console.log(msg.data);
 
                     data = eval('(' + msg.data + ')');
-                    // console.log(data)
+                    console.log(data)
                     $(".box2").text(data.count);
                     $(".box .box3 .num").text(data.today);
                     var index = 0,
@@ -102,7 +105,7 @@
                 }
                 a.onclose = function () {
                     // 关闭 websocket
-                    //   alert(1)
+                      alert(1)
                     clearTimeout(_time);
                     _time = setTimeout(function () {
                         WebSocketTest();
